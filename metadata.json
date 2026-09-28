@@ -1,0 +1,6 @@
+{
+  "name": "AI TECH BD - Appointment Booking & Scheduling Platform",
+  "description": "Enterprise appointment booking system for AI TECH BD with frictionless guest booking, automated system email confirmations, real-time availability sync, multi-language support, client dashboard, and dedicated admin portal.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
