@@ -1,33 +1,70 @@
 # AI TECH BD — Appointment Booking & Scheduling Platform
 
-Enterprise appointment booking for **AI TECH BD** (Dhaka).
+Enterprise appointment booking system for **AI TECH BD** with frictionless guest booking, optional payments, automated email confirmations, real-time availability, multi-language support (English / Bangla), a client dashboard, Gemini AI advisor, and a dedicated admin portal.
 
-Guest booking with no payment required, automated confirmation emails, real-time availability, multi-language UI (EN / BN / AR / ES), client dashboard, and a dedicated staff admin portal.
+Original Google AI Studio app: https://ai.studio/apps/6cf36731-d5be-454e-9b0a-63c861c7ed54
 
 ## Features
 
-- Booking wizard: service → specialist → slot → client details
-- Zero payment required at booking (optional bKash / Nagad / card / Stripe)
-- Client dashboard and calendar
-- Admin portal at `/?admin` or `/admin`
-- Package / service management
-- Gemini AI advisor
-- Email dispatch logs
-- RTL-aware i18n and dark / light theme
+- Guest and signed-in booking wizard (service → date/time → details → confirm)
+- Service catalog and testimonials landing experience
+- Client dashboard with calendar of upcoming appointments
+- Admin portal at `/?admin` or `/admin` (staff login gate)
+- Package / service management for admins
+- Gemini AI advisor modal (server-side Gemini API)
+- Gmail / Google sign-in helpers and notification + payment modals
+- RTL-aware i18n and light/dark theme via booking context
+- Express + Vite + WebSocket server (`server.ts`)
 
 ## Stack
 
-React 19, Vite 8, Tailwind CSS 4, Express (`server.ts`), Gemini (`@google/genai`), Firebase (optional), Nodemailer.
+- React 19 + TypeScript + Vite 8
+- Tailwind CSS 4
+- Express, WebSockets, Nodemailer
+- Firebase client SDK
+- Google Gemini (`@google/genai`)
 
 ## Run locally
+
+**Prerequisites:** Node.js 20+
 
 ```bash
 npm install
 cp .env.example .env.local
-# set GEMINI_API_KEY and APP_URL
+# Set GEMINI_API_KEY and APP_URL in .env.local
 npm run dev
 ```
 
-Admin: `http://localhost:3000/?admin`
+`npm run dev` starts `tsx server.ts` (API + Vite frontend).
 
-Full source is in the attached project archive used to generate this product.
+| Script | Purpose |
+|--------|---------|
+| `npm run dev` / `npm start` | Run Express + Vite |
+| `npm run build` | Production Vite build |
+| `npm run preview` | Preview production build |
+| `npm run lint` | Typecheck |
+
+## Environment
+
+See `.env.example`:
+
+- `GEMINI_API_KEY` — required for the AI advisor
+- `APP_URL` — public URL for OAuth callbacks and email links
+
+Firebase and Gmail OAuth settings live in `firebase-applet-config.json` and `src/lib/workspaceAuth.ts`.
+
+## Project layout
+
+```
+server.ts                 Express + Vite middleware + APIs
+src/App.tsx               Public site + admin route switch
+src/context/BookingContext.tsx
+src/components/           Booking wizard, dashboards, admin, auth, payments
+src/lib/i18n.ts           English / Bangla strings
+src/lib/mockData.ts       Seed services / slots
+src/types/index.ts
+```
+
+## Admin
+
+Open `http://localhost:3000/?admin` (or `/admin`) for the staff portal. Regular visitors never see admin chrome on the marketing/booking site.
