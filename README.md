@@ -1,53 +1,62 @@
 # AI TECH BD — Appointment Booking & Scheduling Platform
 
-Enterprise consultation booking system for **AI TECH BD** (Dhaka). Guest booking with no payment required, automated confirmations, multi-language UI (EN / BN), client dashboard, Gemini AI advisor, and a dedicated staff admin portal.
+Enterprise appointment booking system for **AI TECH BD**.
 
-**AI Studio app:** https://ai.studio/apps/6cf36731-d5be-454e-9b0a-63c861c7ed54
+- Guest booking with no payment required
+- Automated email confirmations
+- Real-time availability
+- Multi-language (EN / BN) and RTL-aware UI
+- Client dashboard and calendar
+- Dedicated staff admin portal (`/admin` or `?admin`)
+- Gemini AI advisor for service recommendations
 
-## Features
-
-- Frictionless guest booking (name, email, phone, company — no account required)
-- Zero payment at booking — consultations confirmed without deposit
-- Service catalog: AI/LLM, cloud & Kubernetes, software architecture, cybersecurity, enterprise consulting
-- Staff calendars with availability and duration-aware slots
-- Meeting formats: Google Meet, in-person Dhaka, phone
-- Client dashboard for upcoming/past appointments
-- Admin portal at `/?admin` or `/admin` (bookings, packages, Gmail dispatch)
-- Gemini advisor for service recommendations (server-side `@google/genai`)
-- English and Bangla i18n, light/dark theme
-- System email + in-app notifications
+Original AI Studio app: https://ai.studio/apps/6cf36731-d5be-454e-9b0a-63c861c7ed54
 
 ## Stack
 
-React 19, Vite 8, Tailwind CSS 4, Express + tsx, Gemini API, Firebase, Nodemailer, Motion, Lucide.
+- React 19 + TypeScript + Vite 8
+- Express + tsx server (`server.ts`) for API, email, and Gemini
+- Tailwind CSS 4
+- Firebase Auth (Google)
+- Nodemailer
+- `@google/genai`
 
-## Local setup
+## Run locally
 
-Requires Node.js 20+.
+**Prerequisites:** Node.js 20+
 
 ```bash
 npm install
 cp .env.example .env.local
-# Set GEMINI_API_KEY and APP_URL in .env.local
-npm run dev
 ```
 
-| Command | Purpose |
-|---|---|
-| `npm run dev` / `npm start` | Express + Vite (`tsx server.ts`) |
-| `npm run build` | Production client build |
-| `npm run lint` | Typecheck |
+Set in `.env.local`:
 
 ```
 GEMINI_API_KEY=your_gemini_api_key
 APP_URL=http://localhost:3000
 ```
 
-## Routes
+Add any Firebase / Gmail SMTP secrets your deployment already uses.
 
-| Path | Audience |
-|---|---|
-| `/` | Public booking site |
-| `/?admin` or `/admin` | Staff administration portal |
+```bash
+npm run dev
+```
 
-Keep `GEMINI_API_KEY` and Gmail tokens server-side only.
+- Public site: booking wizard, services, testimonials, client dashboard
+- Admin portal: `/admin` or `/?admin`
+
+## Scripts
+
+| Script | Purpose |
+|--------|---------|
+| `npm run dev` | Start Express + Vite via `tsx server.ts` |
+| `npm run build` | Production Vite build |
+| `npm run lint` | Typecheck |
+| `npm run preview` | Preview static build |
+
+## Notes
+
+- Guest booking is designed to complete without charging the client.
+- Admin is a separate route so visitors never see staff tools.
+- Keep API keys out of git. Use `.env.local` only.
